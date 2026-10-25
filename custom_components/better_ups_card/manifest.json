@@ -1,0 +1,28 @@
+{
+  "domain": "better_ups_card",
+  "name": "Better UPS Card",
+  "version": "0.1.0",
+  "config_flow": true,
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "dependencies": [
+    "mqtt"
+  ],
+  "after_dependencies": [
+    "dhcp",
+    "network"
+  ],
+  "dhcp": [
+    {
+      "hostname": "better-ups-card"
+    }
+  ],
+  "requirements": [
+    "httpx==0.28.1"
+  ],
+  "documentation": "https://github.com/GeorgeHahn/better-ups-card-home-assistant",
+  "codeowners": [
+    "@GeorgeHahn"
+  ],
+  "issue_tracker": "https://github.com/GeorgeHahn/better-ups-card-home-assistant/issues"
+}
