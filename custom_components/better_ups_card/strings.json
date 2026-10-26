@@ -1,0 +1,46 @@
+{
+  "title": "Better UPS Card",
+  "config": {
+    "flow_title": "Better UPS Card ({host})",
+    "step": {
+      "user": {
+        "title": "Connect to your UPS card",
+        "description": "Sign in with the card's web admin account. Complete initial card setup first. Home Assistant's MQTT integration must already be configured.",
+        "data": {
+          "host": "Card IPv4 address",
+          "username": "Card username",
+          "password": "Card password"
+        }
+      },
+      "broker": {
+        "title": "Configure MQTT automatically",
+        "description": "This enables MQTT and Home Assistant discovery on {host}, after checking its memory budget. The card restarts; UPS output stays on. The suggested broker is your existing Home Assistant broker. MQTT has no TLS: broker credentials are sent in plaintext and stored in card flash. Use existing credentials or enter a dedicated account with the checkbox off. Card admin credentials are discarded after setup. Entities are supplied by the standard MQTT integration. This card supports up to {username_max} username bytes and {password_max} password bytes (printable ASCII).",
+        "data": {
+          "address": "Broker IPv4 address reachable from the card",
+          "port": "Broker port",
+          "use_existing_credentials": "Use Home Assistant's existing broker credentials",
+          "username": "Dedicated broker username",
+          "password": "Dedicated broker password",
+          "confirm_plaintext": "Allow transferring and storing broker credentials on this card"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The card rejected the admin credentials.",
+      "cannot_connect": "Cannot reach the card or resolve the broker. Check the address and network.",
+      "unsupported_firmware": "Update the card to firmware with MQTT resource admission and device identification, and complete its initial setup.",
+      "resources": "The card cannot fit MQTT with its current protocols. Disable an optional protocol in the card configuration and retry.",
+      "wrong_device": "The address now belongs to a different card. Discover or add it again.",
+      "config_changed": "Card configuration changed or the card is restarting. Wait for it to return, then retry.",
+      "save_uncertain": "The save result is uncertain. Do not repeat blindly: wait for the card to restart and check its configuration. Retrying this form reads the current revision before saving.",
+      "mqtt_required": "Set up Home Assistant's MQTT integration first.",
+      "mqtt_incompatible": "This card requires plain TCP MQTT with the default homeassistant discovery prefix. Your current MQTT integration uses incompatible settings.",
+      "broker_config": "Check the broker address, port, and credentials against the limits shown above. A password requires a username. Upgrade card firmware or use a compatible dedicated account if its limits are too small.",
+      "confirm_required": "Confirm the credential transfer before applying this configuration."
+    },
+    "abort": {
+      "already_configured": "This card is already configured.",
+      "invalid_discovery": "The discovered service does not describe a supported UPS card."
+    }
+  }
+}

@@ -1,0 +1,50 @@
+[project]
+name = "better-ups-card-home-assistant"
+# Development environment metadata; HACS uses the component manifest version.
+version = "0.0.0"
+requires-python = ">=3.14.2,<3.15"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "--strict-markers --cov=custom_components.better_ups_card --cov-branch --cov-report=term-missing --cov-fail-under=95"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "ASYNC"]
+
+[dependency-groups]
+dev = [
+    "homeassistant==2026.10.4",
+    "httpx==0.28.1",
+    "paho-mqtt==2.1.0",
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "pytest-cov==7.1.0",
+    "hypothesis==6.170.1",
+    "ruff==0.17.1",
+    "uv==0.13.5",
+]
+
+[tool.uv]
+package = false
+required-version = "==0.13.5"
+exclude-newer = "7 days"
+prerelease = "disallow"
+# HA pins Pillow 12.3.0, which has multiple image-decoder advisories fixed in 13.0.0.
+# This override applies only to the local test environment, not HACS installations.
+override-dependencies = ["pillow==13.0.0"]
+constraint-dependencies = ["certifi>=2026.10.19"]
+
+[tool.uv.exclude-newer-package]
+# Approved tool exception; includes the fix for GHSA-hq85-5cpj-mr62.
+uv = "2026-10-23T00:00:00Z"
+# Retain our HA test baseline: older releases pin vulnerable uv versions.
+homeassistant = "2026-10-25T00:00:00Z"
+# GHSA-6q48-6c7w-9gw2: patched CA bundle, published October 20.
+certifi = "2026-10-21T00:00:00Z"
